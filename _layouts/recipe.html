@@ -67,7 +67,7 @@ layout: default
         <small class="menubar__info-title">Makes</small>
         <p class="menubar__info-value">{{ page.recipeYield }}</p>
       </div>
-      {% elsif page.category == 'Dinners' or page.category == 'Lunches' or page.category == 'Breakfast' %}
+      {% elsif page.category == 'Dinners' or page.category == 'Lunches' or page.category == 'Breakfast' or page.category == 'Sides' %}
       <div class="menubar__info">
         <svg class="menubar__info-icon" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
           <path d="M270.2 149zm49.8 17c0-43.2-15-93.2-24-133.7V32h-8l-.2 117c0 6-3 11-9 11-5.7 0-8-4.3-8.6-10v-1L260 32h-8l-9 117-.2 1c-.6 5.7-3.7 10-9.5 10-6 0-9-5-9-11l-.5-117h-8C207 73 192 123 192 166c0 25.8 14.6 48.2 36.7 58.3 11.2 5 11.3 10.3 11.3 10.3s-16 201.7-16 213c0 11.5 4 18.6 9.5 24s14.2 8.3 22.4 8.3 17-3 22.3-8.7 9.3-11 9.3-24-16-213-16-213-1-5 11.3-10.7c21.6-10 36.6-32.3 36.6-58z"/>
@@ -92,6 +92,7 @@ layout: default
         <small class="menubar__info-title">Steps</small>
         <p class="menubar__info-value">{{ page.recipeInstructions | size }} steps</p>
       </div>
+      <!--
       <div class="menubar__info">
         <svg class="menubar__info-icon" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
           <path d="M223.899,32c25.691,145-96.732,142-95.895,288c0.686,119.51,104.975,160,128.143,160c23.166,0,113.88-26,126.931-160 C393.711,210.816,310.572,96,223.899,32z M256.147,472c0,0-40.701-35.816-40.701-80c0-44.183,40.555-80,40.555-80 s40.332,35.817,40.332,80C296.332,436.184,256.147,472,256.147,472z"/>
@@ -100,6 +101,7 @@ layout: default
         {% capture calories %}{% include calc-nutrient.md recipe=page name='calories' %}{% endcapture %}
         <p class="menubar__info-value">{{ calories | round: 0 }}</p>
       </div>
+      -->
       <div class="menubar__info">
         <svg class="menubar__info-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
           <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"/>
@@ -116,6 +118,12 @@ layout: default
     </aside>
   </div>
 
+  {% if content %}
+  <article class="prose">
+    {{ content }}
+  </article>
+  {% endif %}
+
   <section class="equipment card">
     <h4 class="card__title">Equipment Needed</h4>
     <ul class="card__checklist">
@@ -129,7 +137,7 @@ layout: default
               {{ equipmentData.title }}
             </a>
           {% else %}
-            {{ equipment }}
+            {{ equipment.name }}
           {% endif %}
         </label>
       </li>
@@ -172,7 +180,7 @@ layout: default
               {% if ingredient.name %}{{ ingredient.name }}{% else %}{{ ingredientData.title }}{% endif %}
             </a>
           {% else %}
-            {{ ingredient }}
+            {{ ingredient.name }}
           {% endif %}
           {% if ingredient.amount %}
           <span>: 
@@ -252,14 +260,12 @@ layout: default
   </section>
   {% endif %}
 
+  <!--
   <aside class="nutrition card card--table">
     <h4 class="card__title">Nutrition</h4>
     {% include nutrition-table.html %}
   </aside>
-
-  <article class="prose">
-  {{ content }}
-  </article>
+  -->
 
   {% assign anyRecipesLinked = false %}
   {% for recipe in site.recipes %}
